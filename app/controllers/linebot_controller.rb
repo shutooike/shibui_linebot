@@ -19,6 +19,10 @@ class LinebotController < ApplicationController
 			head :bad_request
 		end
 
+		responses = ["シブいな","激シブやん","ぷりてぃーシブい","ばりシブいやん"]
+
+		@response = responses.sample
+
 		events = client.parse_events_from(body)
 
 		events.each { |event|
@@ -28,7 +32,7 @@ class LinebotController < ApplicationController
 				when Line::Bot::Event::MessageType::Text
 					message = {
 						type: 'text',
-						text: event.message['text']
+						text: @response
 					}
 					client.reply_message(event['replyToken'], message)
 				end
